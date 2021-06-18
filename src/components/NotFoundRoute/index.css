@@ -1,0 +1,24 @@
+.not-found-bg {
+  background-color: #161625;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+.not-found-heading {
+  font-size: 32px;
+  color: #cbd5e1;
+}
+.not-found-description {
+  color: #94a3b8;
+  font-size: 20px;
+}
+.home-button {
+  border: none;
+  height: 48px;
+  width: 88px;
+  border-radius: 15px;
+  background-color: #2563eb;
+  color: #ffffff;
+}

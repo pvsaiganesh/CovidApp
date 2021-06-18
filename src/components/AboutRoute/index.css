@@ -1,0 +1,16 @@
+.about {
+  padding: 20px;
+  background-color: #161625;
+}
+.question {
+  color: #94a3b8;
+  font-size: 16px;
+}
+.answer {
+  color: #007bff;
+  font-size: 16px;
+}
+.heading-about {
+  color: #f8fafc;
+  font-size: 48px;
+}

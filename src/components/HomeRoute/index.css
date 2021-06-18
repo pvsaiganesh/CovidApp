@@ -1,0 +1,93 @@
+.bg {
+  background-color: #161625;
+}
+.horizontal-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  min-width: 696px;
+  list-style: none;
+  padding-top: 20px;
+}
+.item {
+  padding-left: 50px;
+  font-size: 14px;
+  display: inline;
+  color: #ffffff;
+  min-width: 230px;
+}
+.states-list {
+  list-style-type: none;
+  margin-top: 0px;
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid #475569;
+  border-radius: 10px;
+}
+.card-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100px;
+  color: #ffffff;
+}
+.stats-logo {
+  height: 40px;
+  width: 40px;
+  margin: 20px;
+}
+.confirmed {
+  font-size: 16px;
+  color: #ff073a;
+}
+.confirmed-stats {
+  color: #ff073a;
+  font-size: 24px;
+}
+.active {
+  font-size: 16px;
+  color: #007bff;
+}
+.active-stats {
+  color: #007bff;
+  font-size: 24px;
+}
+.recovered {
+  font-size: 16px;
+  color: #28a745;
+}
+.recovered-stats {
+  color: #28a745;
+  font-size: 24px;
+}
+.deceased {
+  font-size: 16px;
+  color: #6c757d;
+}
+.deceased-stats {
+  color: #6c757d;
+  font-size: 24px;
+}
+.headings {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0px;
+  padding: 10px;
+  margin: 10px;
+  color: #f8fafc;
+  font-size: 16;
+  list-style: none;
+  background-color: #1e1e30;
+  border: 1px solid #475569;
+  border-radius: 10px;
+}
+.heading {
+  padding-left: 50px;
+  min-width: 230px;
+}
