@@ -1,6 +1,8 @@
 import {Component} from 'react'
+import {Link} from 'react-router-dom'
 import NavBar from '../NavBar'
 import Footer from '../Footer'
+import State from '../StateRoute'
 import './index.css'
 
 const statesNames = [
@@ -153,6 +155,9 @@ const statesNames = [
 class Home extends Component {
   state = {
     statesStats: [],
+    status: true,
+    data: [],
+    searchValue: '',
   }
 
   componentDidMount() {
@@ -166,7 +171,6 @@ class Home extends Component {
       options,
     )
     const data = await response.json()
-    console.log(data)
     this.setState({statesStats: data})
   }
 
@@ -285,17 +289,90 @@ class Home extends Component {
     </ul>
   )
 
-  renderSearch = () => {}
+  getFilteredData = event => {
+    const searchValue = event.target.value
+    const filteredData = statesNames.filter(item => {
+      let ans
+      if (item.state_name.toLowerCase().includes(searchValue.toLowerCase())) {
+        ans = item
+      }
+      return ans
+    })
+    this.setState({data: filteredData})
+  }
+
+  getSearchItem = stateCode => {
+    console.log(stateCode)
+    this.setState({searchValue: stateCode})
+  }
+
+  renderSearchList = () => {
+    const {data} = this.state
+    let count = 0
+    return (
+      <ul>
+        {data.map(item => {
+          const getItem = () => {
+            this.getSearchItem(item.state_code)
+          }
+          count += 1
+          return (
+            <Link key={`listItem${count}`} className="link" to="/state">
+              <li onClick={getItem} className="search-item">
+                <p className="state-name">{item.state_name}</p>
+                <p className="state-code">{item.state_code}</p>
+              </li>
+            </Link>
+          )
+        })}
+      </ul>
+    )
+  }
+
+  handleChange = () => {
+    this.setState({status: false})
+  }
+
+  renderSearch = () => (
+    <div className="search">
+      <input
+        onClick={this.handleChange}
+        onChange={this.getFilteredData}
+        className="search-box"
+        placeholder="Enter the State"
+        type="search"
+      />
+    </div>
+  )
 
   render() {
+    const {status, searchValue, statesStats} = this.state
     return (
-      <div className="bg">
-        <NavBar />
-        {this.renderSearch()}
-        {this.renderIndiaStats()}
-        {this.renderTableHeading()}
-        {this.renderData()}
-        <Footer />
+      <div>
+        {searchValue === '' ? (
+          <div className="bg">
+            <NavBar />
+            {this.renderSearch()}
+            <div>
+              {status ? (
+                <div>
+                  {this.renderIndiaStats()}
+                  {this.renderTableHeading()}
+                  {this.renderData()}
+                </div>
+              ) : (
+                <div>
+                  <div className="bg-2">{this.renderSearchList()}</div>
+                </div>
+              )}
+            </div>
+            <Footer />
+          </div>
+        ) : (
+          <div>
+            <State searchValue={searchValue} statesStats={statesStats} />
+          </div>
+        )}
       </div>
     )
   }
