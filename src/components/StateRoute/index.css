@@ -1,5 +1,64 @@
-.value {
+.bg-state {
   color: #ffffff;
-  height: 100vh;
   min-height: 100vh;
+  background-color: #161625;
+  font-weight: 600;
+}
+.top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: 'HK Grotesk';
+  padding: 20px;
+}
+.state-main-heading {
+  text-align: center;
+}
+.top-bar-heading {
+  padding: 10px;
+  font-size: 32px;
+  color: #0ea5e9;
+  background: rgba(2, 132, 199, 0.16);
+  border-radius: 30px;
+}
+.date {
+  font-size: 18px;
+  color: #cbd5e1;
+}
+.tested {
+  display: flex;
+  flex-direction: column;
+  color: #94a3b8;
+}
+.tested-name {
+  font-size: 16px;
+  align-self: flex-end;
+}
+.district-container {
+  display: flex;
+  flex-direction: row;
+  min-width: 400px;
+  padding-right: 100px;
+  margin-bottom: 0px;
+}
+.district-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 30px;
+}
+.district-heading {
+  color: #94a3b8;
+  font-size: 16px;
+  padding-top: 15px;
+}
+.district-main-heading {
+  color: #ff073a;
+  font-size: 32px;
+  padding-left: 20px;
+}
+.district-count {
+  color: #94a3b8;
+  font-size: 24px;
+  min-width: 110px;
 }

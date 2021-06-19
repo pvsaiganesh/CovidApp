@@ -2,7 +2,6 @@ import {Component} from 'react'
 import {Link} from 'react-router-dom'
 import NavBar from '../NavBar'
 import Footer from '../Footer'
-import State from '../StateRoute'
 import './index.css'
 
 const statesNames = [
@@ -155,9 +154,7 @@ const statesNames = [
 class Home extends Component {
   state = {
     statesStats: [],
-    status: true,
     data: [],
-    searchValue: '',
   }
 
   componentDidMount() {
@@ -179,16 +176,14 @@ class Home extends Component {
     let confirmed = 0
     let deceased = 0
     let recovered = 0
-    let active = 0
-
     const countFunction = item => {
       confirmed += statesStats[item].total.confirmed
       deceased += statesStats[item].total.deceased
       recovered += statesStats[item].total.recovered
-      active += statesStats[item].total.tested
     }
     const data = Object.keys(statesStats)
     data.forEach(countFunction)
+    const active = confirmed - recovered - deceased
     return (
       <ul className="card-container">
         <li className="card">
@@ -247,21 +242,21 @@ class Home extends Component {
           if (data === undefined) {
             ans = ''
           } else {
+            const active =
+              data.total.confirmed - data.total.recovered - data.total.deceased
             ans = (
               <li key={id}>
                 <div className="table">
                   <ul className="horizontal-list">
                     <li className="item">{stateName}</li>
-                    <li className="item">
+                    <li className="item red">
                       {data.total.confirmed.toLocaleString()}
                     </li>
-                    <li className="item">
-                      {data.total.tested.toLocaleString()}
-                    </li>
-                    <li className="item">
+                    <li className="item blue">{active.toLocaleString()}</li>
+                    <li className="item green">
                       {data.total.recovered.toLocaleString()}
                     </li>
-                    <li className="item">
+                    <li className="item gray">
                       {data.total.deceased.toLocaleString()}
                     </li>
                     <li className="item">
@@ -301,24 +296,20 @@ class Home extends Component {
     this.setState({data: filteredData})
   }
 
-  getSearchItem = stateCode => {
-    console.log(stateCode)
-    this.setState({searchValue: stateCode})
-  }
-
   renderSearchList = () => {
     const {data} = this.state
     let count = 0
     return (
-      <ul>
+      <ul className="search-list">
         {data.map(item => {
-          const getItem = () => {
-            this.getSearchItem(item.state_code)
-          }
           count += 1
           return (
-            <Link key={`listItem${count}`} className="link" to="/state">
-              <li onClick={getItem} className="search-item">
+            <Link
+              key={`listItem${count}`}
+              className="link"
+              to={`/state/${item.state_code}`}
+            >
+              <li className="search-item">
                 <p className="state-name">{item.state_name}</p>
                 <p className="state-code">{item.state_code}</p>
               </li>
@@ -327,10 +318,6 @@ class Home extends Component {
         })}
       </ul>
     )
-  }
-
-  handleChange = () => {
-    this.setState({status: false})
   }
 
   renderSearch = () => (
@@ -346,33 +333,19 @@ class Home extends Component {
   )
 
   render() {
-    const {status, searchValue, statesStats} = this.state
     return (
-      <div>
-        {searchValue === '' ? (
-          <div className="bg">
-            <NavBar />
-            {this.renderSearch()}
-            <div>
-              {status ? (
-                <div>
-                  {this.renderIndiaStats()}
-                  {this.renderTableHeading()}
-                  {this.renderData()}
-                </div>
-              ) : (
-                <div>
-                  <div className="bg-2">{this.renderSearchList()}</div>
-                </div>
-              )}
-            </div>
-            <Footer />
-          </div>
-        ) : (
+      <div className="bg">
+        <NavBar />
+        {this.renderSearch()}
+        <div>{this.renderSearchList()}</div>
+        <div>
           <div>
-            <State searchValue={searchValue} statesStats={statesStats} />
+            {this.renderIndiaStats()}
+            {this.renderTableHeading()}
+            {this.renderData()}
           </div>
-        )}
+        </div>
+        <Footer />
       </div>
     )
   }
