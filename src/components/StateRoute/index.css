@@ -53,7 +53,7 @@
   padding-top: 15px;
 }
 .district-main-heading {
-  color: #ff073a;
+  color: #94a3b8;
   font-size: 32px;
   padding-left: 20px;
 }
@@ -61,4 +61,35 @@
   color: #94a3b8;
   font-size: 24px;
   min-width: 110px;
+}
+.loader-bg {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #161625;
+}
+.district-description {
+  padding-left: 20px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+.chart {
+  padding: 30px;
+}
+@media screen and (max-width: 768px) {
+  .top-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  .card-container {
+    flex-wrap: wrap;
+  }
+  .card {
+    max-width: 160px;
+    min-width: 150px;
+  }
 }

@@ -1,7 +1,8 @@
 import {Component} from 'react'
+import Loader from 'react-loader-spinner'
 import NavBar from '../NavBar'
 import Footer from '../Footer'
-import Chart from './chart'
+import StateChart from './reactStateChart'
 import './index.css'
 
 const statesNames = [
@@ -152,7 +153,7 @@ const statesNames = [
 ]
 
 class State extends Component {
-  state = {stats: {}, stateCode: '', data: {}}
+  state = {stats: {}, stateCode: '', data: {}, loader: true}
 
   componentDidMount() {
     this.getData()
@@ -171,11 +172,13 @@ class State extends Component {
       `https://api.covid19india.org/v4/min/timeseries-${code}.min.json`,
     )
     const data1 = await response1.json()
-    console.log(data1[code].dates)
+
     this.setState({
       stats: data.total,
       data,
+      timelineData: data1[code].dates,
       stateCode: code,
+      loader: false,
     })
   }
 
@@ -186,45 +189,46 @@ class State extends Component {
       return ''
     }
     const active = stats.confirmed - stats.recovered - stats.deceased
+
     return (
-      <ul className="card-container">
-        <li className="card">
-          <p className="confirmed">Confirmed</p>
+      <div className="card-container">
+        <div className="card">
+          <p className="confirmed-class">Confirmed</p>
           <img
             className="stats-logo"
             src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1623915745/check-mark_1_tshh2r.png"
             alt="logo"
           />
           <p className="confirmed-stats">{stats.confirmed.toLocaleString()}</p>
-        </li>
-        <li className="card">
-          <p className="active">Active</p>
+        </div>
+        <div className="card">
+          <p className="active-class">Active</p>
           <img
             className="stats-logo"
             src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1623915751/protection_1_vrxrqn.png"
             alt="logo"
           />
           <p className="active-stats">{active.toLocaleString()}</p>
-        </li>
-        <li className="card">
-          <p className="recovered">Recovered</p>
+        </div>
+        <div id="recovered" className="card">
+          <p className="recovered-class">Recovered</p>
           <img
             className="stats-logo"
             src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1623915741/recovered_1_hespgt.png"
             alt="logo"
           />
           <p className="recovered-stats">{stats.recovered.toLocaleString()}</p>
-        </li>
-        <li className="card">
-          <p className="deceased">Deceased</p>
+        </div>
+        <div id="deceased" className="card">
+          <p className="deceased-class">Deceased</p>
           <img
             className="stats-logo"
             src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1623915737/breathing_1_ddam3m.png"
             alt="logo"
           />
           <p className="deceased-stats">{stats.deceased.toLocaleString()}</p>
-        </li>
-      </ul>
+        </div>
+      </div>
     )
   }
 
@@ -258,12 +262,16 @@ class State extends Component {
     }
     const districtKeys = Object.keys(data.districts)
     let id = 0
-    const countArray = districtKeys.map(item => ({
-      item,
-      count:
+    const countArray = districtKeys.map(item => {
+      let num =
         data.districts[item].total.vaccinated1 +
-        data.districts[item].total.vaccinated2,
-    }))
+        data.districts[item].total.vaccinated2
+      if (Number.isNaN(num)) {
+        num = 0
+      }
+      return {item, count: num}
+    })
+    // for reversing an array
     countArray.sort((a, b) => b.count - a.count)
     /*
     const array = countArray.map(item => {
@@ -291,9 +299,13 @@ class State extends Component {
       <div className="district-list">
         {countArray.map(obj => {
           id += 1
+          let c = obj.count
+          if (c === 0) {
+            c = 'No Data'
+          }
           return (
             <div key={id} className="district-container">
-              <p className="district-count">{obj.count.toLocaleString()}</p>
+              <p className="district-count">{c.toLocaleString()}</p>
               <p className="district-heading">{obj.item}</p>
             </div>
           )
@@ -302,20 +314,32 @@ class State extends Component {
     )
   }
 
-  renderGraphs = () => <p>hi</p>
-
   render() {
+    const {loader, timelineData} = this.state
     return (
-      <div className="bg-state">
-        <NavBar />
-        <div>{this.renderTopBar()}</div>
-        <div>{this.renderStatsBar()}</div>
-        <h1 className="district-main-heading">Top Districts</h1>
-        <div>{this.renderTopDistricts()}</div>
-        <div>
-          <Chart />
-        </div>
-        <Footer />
+      <div>
+        {loader ? (
+          <div>
+            <NavBar />
+            <div className="loader-bg">
+              <Loader type="TailSpin" color="#007BFF" height={50} width={50} />
+            </div>
+          </div>
+        ) : (
+          <div className="bg-state">
+            <NavBar />
+            <div>{this.renderTopBar()}</div>
+            <div>{this.renderStatsBar()}</div>
+            <h1 className="district-main-heading">Top Districts</h1>
+            <p className="district-description">Based on vaccinations</p>
+            <div>{this.renderTopDistricts()}</div>
+            <h1 className="district-main-heading">Spread Trends</h1>
+            <div>
+              <StateChart data={timelineData} />
+            </div>
+            <Footer />
+          </div>
+        )}
       </div>
     )
   }

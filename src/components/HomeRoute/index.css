@@ -18,6 +18,7 @@
   display: inline;
   color: #ffffff;
   min-width: 230px;
+  flex-wrap: wrap;
 }
 .states-list {
   list-style-type: none;
@@ -32,6 +33,7 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
 }
 .card {
   display: flex;
@@ -45,7 +47,7 @@
   width: 40px;
   margin: 20px;
 }
-.confirmed {
+.confirmed-class {
   font-size: 16px;
   color: #ff073a;
 }
@@ -53,7 +55,7 @@
   color: #ff073a;
   font-size: 24px;
 }
-.active {
+.active-class {
   font-size: 16px;
   color: #007bff;
 }
@@ -61,7 +63,7 @@
   color: #007bff;
   font-size: 24px;
 }
-.recovered {
+.recovered-class {
   font-size: 16px;
   color: #28a745;
 }
@@ -69,7 +71,7 @@
   color: #28a745;
   font-size: 24px;
 }
-.deceased {
+.deceased-class {
   font-size: 16px;
   color: #6c757d;
 }
@@ -112,7 +114,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 30vh;
+  height: 20vh;
 }
 .search-item {
   display: flex;
@@ -120,17 +122,17 @@
   justify-content: space-between;
   min-width: 824px;
   max-width: 824px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding: 0px 20px 0px 20px;
   align-items: center;
   border: 1px solid #94a3b8;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
   color: #64748b;
   background-color: #161625;
   border-radius: 20px;
 }
-.link {
+.states-link {
   text-decoration: none;
 }
 .red {
@@ -156,4 +158,81 @@
   background: rgba(28, 212, 212, 0.16);
   border-radius: 4px;
   padding: 20px;
+}
+@media screen and (max-width: 768px) {
+  .item {
+    min-width: 200px;
+    max-width: 400px;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .search-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 300px;
+    max-width: 300px;
+    border-left: none;
+    border-right: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    flex-wrap: wrap;
+    border-radius: none;
+  }
+  .search-list {
+    flex-wrap: wrap;
+    max-width: 350px;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-left: 0px;
+  }
+  .states-link {
+    margin-left: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-width: none;
+    max-width: none;
+    text-decoration: none;
+  }
+  .headings {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .card-container {
+    flex-wrap: wrap;
+  }
+  .horizontal-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    min-width: 400px;
+    max-width: 400px;
+    flex-wrap: wrap;
+  }
+  .table {
+    margin: 0px;
+    padding: 0px;
+    min-width: 0px;
+    max-width: 400px;
+  }
+  .state-name {
+    min-width: 100px;
+    max-width: 150px;
+  }
+  .card {
+    max-width: 160px;
+    min-width: 200px;
+  }
+  .state-code {
+    justify-content: flex-end;
+  }
 }

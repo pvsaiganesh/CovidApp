@@ -1,4 +1,5 @@
 import {Component} from 'react'
+import Loader from 'react-loader-spinner'
 import {Link} from 'react-router-dom'
 import NavBar from '../NavBar'
 import Footer from '../Footer'
@@ -155,6 +156,7 @@ class Home extends Component {
   state = {
     statesStats: [],
     data: [],
+    loader: true,
   }
 
   componentDidMount() {
@@ -168,7 +170,7 @@ class Home extends Component {
       options,
     )
     const data = await response.json()
-    this.setState({statesStats: data})
+    this.setState({statesStats: data, loader: false})
   }
 
   renderIndiaStats = () => {
@@ -187,7 +189,7 @@ class Home extends Component {
     return (
       <ul className="card-container">
         <li className="card">
-          <p className="confirmed">Confirmed</p>
+          <p className="confirmed-class">Confirmed</p>
           <img
             className="stats-logo"
             src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1623915745/check-mark_1_tshh2r.png"
@@ -196,7 +198,7 @@ class Home extends Component {
           <p className="confirmed-stats">{confirmed.toLocaleString()}</p>
         </li>
         <li className="card">
-          <p className="active">Active</p>
+          <p className="active-class">Active</p>
           <img
             className="stats-logo"
             src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1623915751/protection_1_vrxrqn.png"
@@ -205,7 +207,7 @@ class Home extends Component {
           <p className="active-stats">{active.toLocaleString()}</p>
         </li>
         <li className="card">
-          <p className="recovered">Recovered</p>
+          <p className="recovered-class">Recovered</p>
           <img
             className="stats-logo"
             src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1623915741/recovered_1_hespgt.png"
@@ -214,7 +216,7 @@ class Home extends Component {
           <p className="recovered-stats">{recovered.toLocaleString()}</p>
         </li>
         <li className="card">
-          <p className="deceased">Deceased</p>
+          <p className="deceased-class">Deceased</p>
           <img
             className="stats-logo"
             src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1623915737/breathing_1_ddam3m.png"
@@ -306,7 +308,7 @@ class Home extends Component {
           return (
             <Link
               key={`listItem${count}`}
-              className="link"
+              className="states-link"
               to={`/state/${item.state_code}`}
             >
               <li className="search-item">
@@ -333,19 +335,31 @@ class Home extends Component {
   )
 
   render() {
+    const {loader} = this.state
     return (
-      <div className="bg">
-        <NavBar />
-        {this.renderSearch()}
-        <div>{this.renderSearchList()}</div>
-        <div>
+      <div>
+        {loader ? (
           <div>
-            {this.renderIndiaStats()}
-            {this.renderTableHeading()}
-            {this.renderData()}
+            <NavBar />
+            <div className="loader-bg">
+              <Loader type="TailSpin" color="#007BFF" height={50} width={50} />
+            </div>
           </div>
-        </div>
-        <Footer />
+        ) : (
+          <div className="bg">
+            <NavBar />
+            {this.renderSearch()}
+            <div>{this.renderSearchList()}</div>
+            <div>
+              <div>
+                {this.renderIndiaStats()}
+                {this.renderTableHeading()}
+                {this.renderData()}
+              </div>
+            </div>
+            <Footer />
+          </div>
+        )}
       </div>
     )
   }

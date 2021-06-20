@@ -4,8 +4,11 @@ dependencies:
   '@testing-library/react': 11.2.5_react-dom@17.0.1+react@17.0.1
   '@testing-library/user-event': 12.6.2
   chalk: 4.1.0
+  chart.js: 3.3.2
   material-ui: 0.20.2_react-dom@17.0.1+react@17.0.1
   react: 17.0.1
+  react-chartjs: 1.2.0_950f2e65afe98ef2a35838379e8207e6
+  react-chartjs-2: 3.0.3_chart.js@3.3.2+react@17.0.1
   react-dom: 17.0.1_react@17.0.1
   react-loader-spinner: 4.0.0_react-dom@17.0.1+react@17.0.1
   react-router-dom: 5.2.0_react@17.0.1
@@ -3911,6 +3914,10 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==
+  /chart.js/3.3.2:
+    dev: false
+    resolution:
+      integrity: sha512-H0hSO7xqTIrwxoACqnSoNromEMfXvfuVnrbuSt2TuXfBDDofbnto4zuZlRtRvC73/b37q3wGAWZyUU41QPvNbA==
   /check-types/11.1.2:
     dev: true
     resolution:
@@ -4363,6 +4370,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-MJG9liiZ+ogc4TzUwuvbER1JRdgvUFSB5+VR/g5h82fGaIRWMWddtKBHi7/sVhfjQZ6SehlyhvQYrcYkaUIpLg==
+  /create-react-class/15.7.0:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+    dev: false
+    resolution:
+      integrity: sha512-QZv4sFWG9S5RUvkTYWbflxeZX+JG7Cz0Tn33rQBJ+WFQTqTfUTjMjiv9tnfXazjsO5r0KhPs+AqCjyrQX6h2ng==
   /cross-spawn/6.0.5:
     dependencies:
       nice-try: 1.0.5
@@ -10657,6 +10671,30 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-0sF4ny9v/B7s6aoehwze9vJNWcmCemAUYBVasscVr92+UYiEqDXOxfKjXN685mDaMRNF3WdhHQs76oTODMocFA==
+  /react-chartjs-2/3.0.3_chart.js@3.3.2+react@17.0.1:
+    dependencies:
+      chart.js: 3.3.2
+      lodash: 4.17.21
+      react: 17.0.1
+    dev: false
+    peerDependencies:
+      chart.js: ^3.1.0
+      react: ^16.8.0 || ^17.0.0
+    resolution:
+      integrity: sha512-jOFZKwZ8sMLkddewZ/tToxuu4pYimAvvY5I6uK+hCpSFT16Pvo2bdHhUoZ0X87zu9I+dx2I+JCqaLN6XhmrbDg==
+  /react-chartjs/1.2.0_950f2e65afe98ef2a35838379e8207e6:
+    dependencies:
+      chart.js: 3.3.2
+      create-react-class: 15.7.0
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
+    dev: false
+    peerDependencies:
+      chart.js: ^1.1.1
+      react: '*'
+      react-dom: '*'
+    resolution:
+      integrity: sha512-Zhc47Jv8DwJwT3R5iyskRWoz5TEP3qloMlC758Oa+4THSxd/Qat4CIE23epY7XHzEuL5m6/hJIjD2iqLcO9rfw==
   /react-dev-utils/11.0.4:
     dependencies:
       '@babel/code-frame': 7.10.4
@@ -13566,6 +13604,7 @@ specifiers:
   '@testing-library/react': 11.2.5
   '@testing-library/user-event': 12.6.2
   chalk: 4.1.0
+  chart.js: 3.3.2
   eslint-config-airbnb: 18.2.1
   eslint-config-prettier: 8.1.0
   eslint-plugin-prettier: 3.3.1
@@ -13575,6 +13614,8 @@ specifiers:
   npm-run-all: 4.1.5
   prettier: 2.2.1
   react: 17.0.1
+  react-chartjs: 1.2.0
+  react-chartjs-2: 3.0.3
   react-dom: 17.0.1
   react-loader-spinner: 4.0.0
   react-router-dom: 5.2.0

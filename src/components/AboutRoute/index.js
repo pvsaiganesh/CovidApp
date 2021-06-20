@@ -1,10 +1,11 @@
 import {Component} from 'react'
+import Loader from 'react-loader-spinner'
 import NavBar from '../NavBar'
 import Footer from '../Footer'
 import './index.css'
 
 class About extends Component {
-  state = {aboutData: []}
+  state = {aboutData: [], loader: true}
 
   componentDidMount() {
     this.getData()
@@ -15,8 +16,7 @@ class About extends Component {
       'https://api.covid19india.org/website_data.json',
     )
     const data = await response.json()
-    console.log(data.faq)
-    this.setState({aboutData: data.faq})
+    this.setState({aboutData: data.faq, loader: false})
   }
 
   renderData = () => {
@@ -35,11 +35,20 @@ class About extends Component {
   }
 
   render() {
+    const {loader} = this.state
     return (
-      <div>
-        <NavBar />
-        {this.renderData()}
-        <Footer />
+      <div className="bg">
+        {loader ? (
+          <div className="loader-bg">
+            <Loader type="TailSpin" color="#007BFF" height={80} width={80} />
+          </div>
+        ) : (
+          <div>
+            <NavBar />
+            {this.renderData()}
+            <Footer />
+          </div>
+        )}
       </div>
     )
   }
