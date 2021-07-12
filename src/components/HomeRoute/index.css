@@ -3,6 +3,7 @@
   margin: 0px;
   height: inherit;
   min-height: 100vh;
+  font-family: 'Open Sans', sans-serif;
 }
 .horizontal-list {
   display: flex;
@@ -13,15 +14,12 @@
   padding-top: 20px;
 }
 .item {
-  padding-left: 50px;
   font-size: 14px;
-  display: inline;
   color: #ffffff;
-  min-width: 230px;
   flex-wrap: wrap;
 }
 .states-list {
-  list-style-type: none;
+  width: 90vw;
   margin-top: 0px;
   padding: 10px;
   margin: 10px;
@@ -79,12 +77,12 @@
   color: #6c757d;
   font-size: 24px;
 }
-.headings {
+.to-center {
   display: flex;
   flex-direction: row;
-  margin-bottom: 0px;
-  padding: 10px;
-  margin: 10px;
+  justify-content: center;
+}
+.headings {
   color: #f8fafc;
   font-size: 16;
   list-style: none;
@@ -92,9 +90,18 @@
   border: 1px solid #475569;
   border-radius: 10px;
 }
-.heading {
-  padding-left: 50px;
-  min-width: 230px;
+th,
+td {
+  text-align: center;
+}
+td {
+  padding: 10px;
+}
+.left {
+  text-align: left;
+}
+.white {
+  color: white;
 }
 .bg-2 {
   background-color: #161625;
@@ -132,6 +139,12 @@
   background-color: #161625;
   border-radius: 20px;
 }
+.sort {
+  margin: 5px;
+}
+.sort:hover {
+  cursor: pointer;
+}
 .states-link {
   text-decoration: none;
 }
@@ -148,10 +161,13 @@
   color: #6c757d;
 }
 .search-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   max-width: 824px;
   margin-right: 308px;
-  margin-left: 238px;
+  margin-left: 328px;
 }
 .state-code {
   color: #facc15;

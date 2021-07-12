@@ -76,7 +76,19 @@
   font-size: 14px;
 }
 .chart {
-  padding: 30px;
+  padding: 50px;
+}
+.toggles {
+  padding: 20px;
+}
+.btn {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #1e1e30;
+  color: #64748b;
+}
+.btn:hover {
+  color: #ffffff;
 }
 @media screen and (max-width: 768px) {
   .top-bar {

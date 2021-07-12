@@ -1,12 +1,20 @@
 import {Component} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import './index.css'
 
 class NavBar extends Component {
+  state = {clicked: false}
+
+  goToHome = () => {
+    this.setState({clicked: true})
+  }
+
   render() {
+    const {clicked} = this.state
     return (
       <div className="navbar">
         <img
+          onClick={this.goToHome}
           className="logo"
           src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1623916145/COVID19INDIA_nxaqfk.png"
           alt="logo"
@@ -19,6 +27,7 @@ class NavBar extends Component {
             About
           </Link>
         </div>
+        {clicked ? <Redirect to="/" /> : ''}
       </div>
     )
   }

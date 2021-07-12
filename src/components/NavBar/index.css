@@ -11,6 +11,9 @@
   font-size: 16px;
   padding: 20px;
 }
+.link:hover {
+  font-weight: bold;
+}
 .logo {
   width: 200px;
 }

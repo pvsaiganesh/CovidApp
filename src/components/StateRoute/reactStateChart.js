@@ -1,8 +1,9 @@
 import {Component} from 'react'
-import {Line} from 'react-chartjs-2'
+import {Line, Bar} from 'react-chartjs-2'
+import {format} from 'date-fns'
 
 export default class StateChart extends Component {
-  state = {totalData: {}, totalData1: {}, totalData2: {}, totalData3: {}}
+  state = {daily: true, totalDateCountArray: []}
 
   componentDidMount() {
     this.renderData()
@@ -11,157 +12,304 @@ export default class StateChart extends Component {
   renderData = () => {
     const {data} = this.props
     const keys = Object.keys(data)
-    const labels = []
-    const requiredData = []
-    const requiredData1 = []
-    const requiredData2 = []
-    const requiredData3 = []
-    keys.forEach(item => {
-      labels.push(item)
-      requiredData.push(data[item].total.confirmed)
-      requiredData1.push(
-        data[item].total.confirmed -
-          data[item].total.deceased -
-          data[item].total.recovered,
-      )
-      requiredData2.push(data[item].total.recovered)
-      requiredData3.push(data[item].total.deceased)
+    const rawLabelsSet = []
+    const confirmedArray = []
+    let confirmedCount = 0
+    const recoveredArray = []
+    let recoveredCount = 0
+    const activeArray = []
+    let activeCount = 0
+    const deceasedArray = []
+    let deceasedCount = 0
+    let testedCount = 0
+    const testedArray = []
+    let vaccinatedOneCount = 0
+    const vaccinatedOneArray = []
+    let vaccinatedTwoCount = 0
+    const vaccinatedTwoArray = []
+    keys.forEach(item =>
+      rawLabelsSet.push(format(new Date(item), 'MMM Y').toString()),
+    )
+    const rawDatesSet = []
+    keys.forEach(item =>
+      rawDatesSet.push(format(new Date(item), 'd MMM').toString()),
+    )
+    const datesLabels = rawDatesSet.reverse().splice(0, 10)
+    const dateCountConfirmedArray = []
+    const dateCountRecoveredArray = []
+    const dateCountDeceasedArray = []
+    const dateCountActiveArray = []
+    datesLabels.reverse().forEach(label => {
+      keys.forEach(item => {
+        if (format(new Date(item), 'd MMM').toString() === label) {
+          if (format(new Date(item), 'y').toString() === '2021') {
+            dateCountConfirmedArray.push(data[item].delta.confirmed)
+            if (
+              Number.isNaN(data[item].delta.deceased) ||
+              data[item].delta.deceased === undefined
+            ) {
+              dateCountDeceasedArray.push(0)
+            } else {
+              dateCountDeceasedArray.push(data[item].delta.deceased)
+            }
+            if (
+              Number.isNaN(data[item].delta.recovered) ||
+              data[item].delta.recovered === undefined
+            ) {
+              dateCountRecoveredArray.push(0)
+            } else {
+              dateCountRecoveredArray.push(data[item].delta.recovered)
+            }
+            if (
+              Number.isNaN(data[item].delta.tested) ||
+              data[item].delta.tested === undefined
+            ) {
+              dateCountActiveArray.push(0)
+            } else {
+              dateCountActiveArray.push(data[item].delta.tested)
+            }
+          }
+        }
+      })
     })
-    const totalData = {
-      labels,
-      datasets: [
-        {
-          label: 'Confirmed Cases',
-          fill: false,
-          lineTension: 0.5,
-          backgroundColor: '#FF073A',
-          color: '#FF073A',
-          borderColor: '#FF073A',
-          borderWidth: 2,
-          data: requiredData,
-        },
-      ],
-    }
-    const totalData1 = {
-      labels,
-      datasets: [
-        {
-          label: 'Active Cases',
-          fill: false,
-          lineTension: 0.5,
-          backgroundColor: '#007BFF',
-          color: '#007BFF',
-          borderColor: '#007BFF',
-          borderWidth: 2,
-          data: requiredData1,
-        },
-      ],
-    }
+    const labels = [...new Set(rawLabelsSet)]
+    labels.forEach(label => {
+      keys.forEach(item => {
+        if (format(new Date(item), 'MMM Y').toString() === label) {
+          if (
+            Number.isNaN(data[item].total.deceased) ||
+            data[item].total.deceased === undefined
+          ) {
+            deceasedCount += 0
+          } else {
+            deceasedCount += data[item].total.deceased
+          }
+          if (
+            Number.isNaN(data[item].total.recovered) ||
+            data[item].total.recovered === undefined
+          ) {
+            recoveredCount += 0
+          } else {
+            recoveredCount += data[item].total.recovered
+          }
+          if (
+            (Number.isNaN(data[item].total.deceased) ||
+              data[item].total.deceased === undefined) &&
+            (Number.isNaN(data[item].total.recovered) ||
+              data[item].total.recovered === undefined)
+          ) {
+            activeCount += data[item].total.confirmed
+          } else if (
+            Number.isNaN(data[item].total.deceased) ||
+            data[item].total.deceased === undefined
+          ) {
+            activeCount +=
+              data[item].total.confirmed - data[item].total.recovered
+          } else if (
+            Number.isNaN(data[item].total.recovered) ||
+            data[item].total.recovered === undefined
+          ) {
+            activeCount +=
+              data[item].total.confirmed - data[item].total.deceased
+          } else {
+            activeCount +=
+              data[item].total.confirmed -
+              data[item].total.deceased -
+              data[item].total.recovered
+          }
+          if (
+            Number.isNaN(data[item].total.tested) ||
+            data[item].total.tested === undefined
+          ) {
+            testedCount += 0
+          } else {
+            testedCount += data[item].total.tested
+          }
+          if (
+            Number.isNaN(data[item].total.vaccinated1) ||
+            data[item].total.vaccinated1 === undefined
+          ) {
+            vaccinatedOneCount += 0
+          } else {
+            vaccinatedOneCount += data[item].total.vaccinated1
+          }
+          if (
+            Number.isNaN(data[item].total.vaccinated2) ||
+            data[item].total.vaccinated2 === undefined
+          ) {
+            vaccinatedTwoCount += 0
+          } else {
+            vaccinatedTwoCount += data[item].total.vaccinated2
+          }
 
-    const totalData2 = {
+          confirmedCount += data[item].total.confirmed
+        }
+      })
+      confirmedArray.push(confirmedCount)
+      recoveredArray.push(recoveredCount)
+      activeArray.push(activeCount)
+      deceasedArray.push(deceasedCount)
+      testedArray.push(testedCount)
+      vaccinatedOneArray.push(vaccinatedOneCount)
+      vaccinatedTwoArray.push(vaccinatedTwoCount)
+    })
+    const UltimateLineGraphArray = [
+      confirmedArray,
+      recoveredArray,
+      activeArray,
+      deceasedArray,
+      testedArray,
+      vaccinatedOneArray,
+      vaccinatedTwoArray,
+    ]
+    const UltimateColorsArray = [
+      '#FF073A',
+      '#007BFF',
+      '#27A243',
+      '#6C757D',
+      '#9673B9',
+      '#F95581',
+      '#F95581',
+    ]
+    const labelTexts = [
+      'Confirmed',
+      'Active',
+      'Recovered',
+      'Deceased',
+      'Tested',
+      'Vaccinated (One Dose)',
+      'Vaccinated (Two doses) ',
+    ]
+    const totalDataArray = UltimateLineGraphArray.map((item, index) => ({
       labels,
       datasets: [
         {
-          label: 'Recovered Cases',
+          label: labelTexts[index],
           fill: false,
-          lineTension: 0.5,
-          backgroundColor: '#27A243',
-          color: '#27A243',
-          borderColor: '#27A243',
+          lineTension: 0.1,
+          backgroundColor: UltimateColorsArray[index],
+          color: UltimateColorsArray[index],
+          borderColor: UltimateColorsArray[index],
+          hoverBackgroundColor: UltimateColorsArray[index],
           borderWidth: 2,
-          data: requiredData2,
+          data: item,
         },
       ],
-    }
-
-    const totalData3 = {
-      labels,
+    }))
+    const UltimateBarGraphArray = [
+      dateCountConfirmedArray,
+      dateCountActiveArray,
+      dateCountDeceasedArray,
+      dateCountRecoveredArray,
+    ]
+    const totalDateCountArray = UltimateBarGraphArray.map((item, index) => ({
+      labels: datesLabels,
       datasets: [
         {
-          label: 'Deceased Cases',
+          label: labelTexts[index],
           fill: false,
-          lineTension: 0.5,
-          backgroundColor: '#6C757D',
-          color: '#6C757D',
-          borderColor: '#6C757D',
+          backgroundColor: UltimateColorsArray[index],
+          color: UltimateColorsArray[index],
+          borderColor: UltimateColorsArray[index],
           borderWidth: 2,
-          data: requiredData3,
+          hoverBackgroundColor: UltimateColorsArray[index],
+          data: item,
         },
       ],
-    }
+    }))
+    console.log(totalDateCountArray)
+    this.setState({
+      totalDataArray,
+      totalDateCountArray,
+    })
+  }
 
-    this.setState({totalData, totalData1, totalData2, totalData3})
+  getDaily = () => {
+    const {daily} = this.state
+    if (daily === false) {
+      this.setState({daily: true})
+    }
+  }
+
+  getCummulative = () => {
+    const {daily} = this.state
+    if (daily === true) {
+      this.setState({daily: false})
+    }
   }
 
   render() {
-    const {totalData, totalData1, totalData2, totalData3} = this.state
-    console.log(totalData)
+    const {daily, totalDataArray, totalDateCountArray} = this.state
+    const UltimateText = [
+      'Average Confirmed per month',
+      'Average Active per month',
+      'Average Recovered per month',
+      'Average Deceased per month',
+      'Average Tested per month',
+      'Average Vaccinated(One Dose) per month',
+      'Average Vaccinated (Two Doses) per month',
+    ]
+    const countArray = [1, 2, 3, 4, 5, 6, 7]
+    console.log(totalDateCountArray)
     return (
       <div>
-        <div className="chart">
-          <Line
-            data={totalData}
-            options={{
-              title: {
-                display: true,
-                text: 'Average Rainfall per month',
-                fontSize: 20,
-              },
-              legend: {
-                display: true,
-                position: 'right',
-              },
-            }}
-          />
+        <h1 className="district-main-heading">Spread Trends</h1>
+        <div className="toggles">
+          <button className="btn" type="button" onClick={this.getDaily}>
+            Daily
+          </button>
+          <button className="btn" type="button" onClick={this.getCummulative}>
+            Cummulative
+          </button>
         </div>
-        <div className="chart">
-          <Line
-            data={totalData1}
-            options={{
-              title: {
-                display: true,
-                text: 'Average Rainfall per month',
-                fontSize: 20,
-              },
-              legend: {
-                display: true,
-                position: 'right',
-              },
-            }}
-          />
-        </div>
-        <div className="chart">
-          <Line
-            data={totalData2}
-            options={{
-              title: {
-                display: true,
-                text: 'Average Rainfall per month',
-                fontSize: 20,
-              },
-              legend: {
-                display: true,
-                position: 'right',
-              },
-            }}
-          />
-        </div>
-        <div className="chart">
-          <Line
-            data={totalData3}
-            options={{
-              title: {
-                display: true,
-                text: 'Average Rainfall per month',
-                fontSize: 20,
-              },
-              legend: {
-                display: true,
-                position: 'right',
-              },
-            }}
-          />
-        </div>
+        {daily ? (
+          <div>
+            <p className="district-description">Daily</p>
+            <div>
+              {totalDateCountArray.map((item, index) => (
+                <div key={countArray[index]} className="chart">
+                  <Bar
+                    data={item}
+                    options={{
+                      title: {
+                        display: true,
+                        text: UltimateText[index],
+                        fontSize: 20,
+                      },
+                      legend: {
+                        display: true,
+                        position: 'right',
+                      },
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div>
+            <p className="district-description">Cummulative</p>
+            {totalDataArray.map((item, index) => (
+              <div key={countArray[index]} className="chart">
+                <Line
+                  className="chart"
+                  data={item}
+                  options={{
+                    title: {
+                      display: true,
+                      text: UltimateText[index],
+                      fontSize: 20,
+                    },
+                    legend: {
+                      display: true,
+                      position: 'right',
+                    },
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     )
   }

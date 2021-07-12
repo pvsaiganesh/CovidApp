@@ -172,7 +172,7 @@ class State extends Component {
       `https://api.covid19india.org/v4/min/timeseries-${code}.min.json`,
     )
     const data1 = await response1.json()
-
+    console.log(data1[code])
     this.setState({
       stats: data.total,
       data,
@@ -256,6 +256,7 @@ class State extends Component {
 
   renderTopDistricts = () => {
     const {data} = this.state
+    console.log(data)
     const keys = Object.keys(data)
     if (data === undefined || keys.length === 0) {
       return ''
@@ -333,7 +334,6 @@ class State extends Component {
             <h1 className="district-main-heading">Top Districts</h1>
             <p className="district-description">Based on vaccinations</p>
             <div>{this.renderTopDistricts()}</div>
-            <h1 className="district-main-heading">Spread Trends</h1>
             <div>
               <StateChart data={timelineData} />
             </div>
