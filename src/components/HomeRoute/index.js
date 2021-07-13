@@ -168,6 +168,7 @@ class Home extends Component {
       'https://api.covid19india.org/v4/min/data.min.json',
     )
     const data = await response.json()
+    console.log(data)
     this.setState({statesStats: data, loader: false})
   }
 
@@ -186,7 +187,7 @@ class Home extends Component {
     const active = confirmed - recovered - deceased
     return (
       <ul className="card-container">
-        <li className="card">
+        <li className="card conf">
           <p className="confirmed-class">Confirmed</p>
           <img
             className="stats-logo"
@@ -195,7 +196,7 @@ class Home extends Component {
           />
           <p className="confirmed-stats">{confirmed.toLocaleString()}</p>
         </li>
-        <li className="card">
+        <li className="card acti">
           <p className="active-class">Active</p>
           <img
             className="stats-logo"
@@ -204,7 +205,7 @@ class Home extends Component {
           />
           <p className="active-stats">{active.toLocaleString()}</p>
         </li>
-        <li className="card">
+        <li className="card reco">
           <p className="recovered-class">Recovered</p>
           <img
             className="stats-logo"
@@ -213,7 +214,7 @@ class Home extends Component {
           />
           <p className="recovered-stats">{recovered.toLocaleString()}</p>
         </li>
-        <li className="card">
+        <li className="card dece">
           <p className="deceased-class">Deceased</p>
           <img
             className="stats-logo"

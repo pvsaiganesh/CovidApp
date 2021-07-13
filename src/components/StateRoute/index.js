@@ -153,7 +153,7 @@ const statesNames = [
 ]
 
 class State extends Component {
-  state = {stats: {}, stateCode: '', data: {}, loader: true}
+  state = {stats: {}, stateCode: '', value: '', data: {}, loader: true}
 
   componentDidMount() {
     this.getData()
@@ -188,11 +188,19 @@ class State extends Component {
     if (keys.length === 0) {
       return ''
     }
+    const getId = event => {
+      this.setState({value: event.target.id}, this.renderTopDistricts)
+    }
     const active = stats.confirmed - stats.recovered - stats.deceased
 
     return (
       <div className="card-container">
-        <div className="card">
+        <button
+          type="button"
+          onClick={getId}
+          id="confirmed"
+          className="card conf"
+        >
           <p className="confirmed-class">Confirmed</p>
           <img
             className="stats-logo"
@@ -200,8 +208,8 @@ class State extends Component {
             alt="logo"
           />
           <p className="confirmed-stats">{stats.confirmed.toLocaleString()}</p>
-        </div>
-        <div className="card">
+        </button>
+        <button type="button" onClick={getId} id="active" className="card acti">
           <p className="active-class">Active</p>
           <img
             className="stats-logo"
@@ -209,8 +217,13 @@ class State extends Component {
             alt="logo"
           />
           <p className="active-stats">{active.toLocaleString()}</p>
-        </div>
-        <div id="recovered" className="card">
+        </button>
+        <button
+          type="button"
+          onClick={getId}
+          id="recovered"
+          className="card reco"
+        >
           <p className="recovered-class">Recovered</p>
           <img
             className="stats-logo"
@@ -218,8 +231,13 @@ class State extends Component {
             alt="logo"
           />
           <p className="recovered-stats">{stats.recovered.toLocaleString()}</p>
-        </div>
-        <div id="deceased" className="card">
+        </button>
+        <button
+          type="button"
+          onClick={getId}
+          id="deceased"
+          className="card dece"
+        >
           <p className="deceased-class">Deceased</p>
           <img
             className="stats-logo"
@@ -227,7 +245,7 @@ class State extends Component {
             alt="logo"
           />
           <p className="deceased-stats">{stats.deceased.toLocaleString()}</p>
-        </div>
+        </button>
       </div>
     )
   }
@@ -255,8 +273,7 @@ class State extends Component {
   }
 
   renderTopDistricts = () => {
-    const {data} = this.state
-    console.log(data)
+    const {data, value} = this.state
     const keys = Object.keys(data)
     if (data === undefined || keys.length === 0) {
       return ''
@@ -264,37 +281,23 @@ class State extends Component {
     const districtKeys = Object.keys(data.districts)
     let id = 0
     const countArray = districtKeys.map(item => {
-      let num =
-        data.districts[item].total.vaccinated1 +
-        data.districts[item].total.vaccinated2
-      if (Number.isNaN(num)) {
+      let num
+      if (value === 'confirmed') {
+        num = data.districts[item].total.confirmed
+      } else if (value === 'active') {
+        num = data.districts[item].total.active
+      } else if (value === 'recovered') {
+        num = data.districts[item].total.recovered
+      } else if (value === 'deceased') {
+        num = data.districts[item].total.deceased
+      }
+      if (Number.isNaN(num) || num === undefined) {
         num = 0
       }
       return {item, count: num}
     })
-    // for reversing an array
     countArray.sort((a, b) => b.count - a.count)
-    /*
-    const array = countArray.map(item => {
-      id += 1
-       let ans = ''
-    
-      if (
-        data.districts[item].total.vaccinated1 +
-          data.districts[item].total.vaccinated2 ===
-        item
-      ) {
-        ans = 
-      return {
-        key: id,
-        stateName: item,
-        count: (
-          data.districts[item].total.vaccinated1 +
-          data.districts[item].total.vaccinated2
-        ).toLocaleString(),
-      }
-    }) */
-
+    console.log(countArray)
     id = 0
     return (
       <div className="district-list">
@@ -332,7 +335,6 @@ class State extends Component {
             <div>{this.renderTopBar()}</div>
             <div>{this.renderStatsBar()}</div>
             <h1 className="district-main-heading">Top Districts</h1>
-            <p className="district-description">Based on vaccinations</p>
             <div>{this.renderTopDistricts()}</div>
             <div>
               <StateChart data={timelineData} />

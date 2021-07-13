@@ -37,8 +37,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 100px;
+  width: 300px;
   color: #ffffff;
+  background-color: transparent;
+  border: none;
 }
 .stats-logo {
   height: 40px;
@@ -48,6 +50,25 @@
 .confirmed-class {
   font-size: 16px;
   color: #ff073a;
+}
+.card:hover {
+  color: #ffffff;
+}
+.card.conf:hover {
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 20px;
+}
+.card.acti:hover {
+  background-color: rgba(0, 0, 255, 0.1);
+  border-radius: 20px;
+}
+.card.reco:hover {
+  background-color: rgba(0, 255, 0, 0.1);
+  border-radius: 20px;
+}
+.card.dece:hover {
+  background-color: rgba(220, 220, 220, 0.1);
+  border-radius: 20px;
 }
 .confirmed-stats {
   color: #ff073a;

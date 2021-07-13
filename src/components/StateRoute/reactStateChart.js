@@ -217,7 +217,6 @@ export default class StateChart extends Component {
         },
       ],
     }))
-    console.log(totalDateCountArray)
     this.setState({
       totalDataArray,
       totalDateCountArray,
@@ -250,7 +249,6 @@ export default class StateChart extends Component {
       'Average Vaccinated (Two Doses) per month',
     ]
     const countArray = [1, 2, 3, 4, 5, 6, 7]
-    console.log(totalDateCountArray)
     return (
       <div>
         <h1 className="district-main-heading">Spread Trends</h1>
