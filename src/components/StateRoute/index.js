@@ -153,7 +153,7 @@ const statesNames = [
 ]
 
 class State extends Component {
-  state = {stats: {}, stateCode: '', value: '', data: {}, loader: true}
+  state = {stats: {}, stateCode: '', value: 'confirmed', data: {}, loader: true}
 
   componentDidMount() {
     this.getData()
@@ -172,7 +172,6 @@ class State extends Component {
       `https://api.covid19india.org/v4/min/timeseries-${code}.min.json`,
     )
     const data1 = await response1.json()
-    console.log(data1[code])
     this.setState({
       stats: data.total,
       data,
@@ -274,6 +273,17 @@ class State extends Component {
 
   renderTopDistricts = () => {
     const {data, value} = this.state
+    let allCSS
+    if (value === 'confirmed') {
+      allCSS = 'red'
+    } else if (value === 'active') {
+      allCSS = 'blue'
+    } else if (value === 'recovered') {
+      allCSS = 'green'
+    } else if (value === 'deceased') {
+      allCSS = 'gray'
+    }
+
     const keys = Object.keys(data)
     if (data === undefined || keys.length === 0) {
       return ''
@@ -297,23 +307,26 @@ class State extends Component {
       return {item, count: num}
     })
     countArray.sort((a, b) => b.count - a.count)
-    console.log(countArray)
     id = 0
     return (
-      <div className="district-list">
-        {countArray.map(obj => {
-          id += 1
-          let c = obj.count
-          if (c === 0) {
-            c = 'No Data'
-          }
-          return (
-            <div key={id} className="district-container">
-              <p className="district-count">{c.toLocaleString()}</p>
-              <p className="district-heading">{obj.item}</p>
-            </div>
-          )
-        })}
+      <div>
+        <h1 className={`district-main-heading ${allCSS}`}>Top Districts</h1>
+
+        <div className="district-list">
+          {countArray.map(obj => {
+            id += 1
+            let c = obj.count
+            if (c === 0) {
+              c = 'No Data'
+            }
+            return (
+              <div key={id} className={`district-container ${allCSS}`}>
+                <p className="district-count conf">{c.toLocaleString()}</p>
+                <p className="district-heading">{obj.item}</p>
+              </div>
+            )
+          })}
+        </div>
       </div>
     )
   }
@@ -334,7 +347,6 @@ class State extends Component {
             <NavBar />
             <div>{this.renderTopBar()}</div>
             <div>{this.renderStatsBar()}</div>
-            <h1 className="district-main-heading">Top Districts</h1>
             <div>{this.renderTopDistricts()}</div>
             <div>
               <StateChart data={timelineData} />

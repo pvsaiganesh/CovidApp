@@ -134,7 +134,14 @@ td {
   height: 72px;
   border-radius: 10px;
   background-color: #2f2f43;
+  padding: 10px;
   color: #ffffff;
+  border-color: transparent;
+  outline: none;
+}
+.search-icon {
+  color: #ffffff;
+  margin: 20px;
 }
 .search {
   background-color: #161625;
@@ -169,6 +176,10 @@ td {
 .states-link {
   text-decoration: none;
 }
+.states-link:hover {
+  background-color: black;
+  border-radius: 20px;
+}
 .red {
   color: #ff073a;
 }
@@ -181,6 +192,13 @@ td {
 .gray {
   color: #6c757d;
 }
+.arrow-image {
+  height: 20px;
+}
+.arrow-color {
+  background-color: #2f2f43;
+  color: #facc15;
+}
 .search-list {
   display: flex;
   flex-direction: column;
@@ -190,10 +208,14 @@ td {
   margin-right: 308px;
   margin-left: 328px;
 }
+.state-name {
+  color: white;
+}
 .state-code {
   color: #facc15;
   background: rgba(28, 212, 212, 0.16);
   border-radius: 4px;
+  font-size: 24px;
   padding: 20px;
 }
 @media screen and (max-width: 768px) {
@@ -217,6 +239,9 @@ td {
     padding-right: 10px;
     flex-wrap: wrap;
     border-radius: none;
+  }
+  .hide {
+    display: none;
   }
   .search-list {
     flex-wrap: wrap;

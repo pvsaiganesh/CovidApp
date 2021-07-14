@@ -26,6 +26,7 @@ specifiers:
   react-chartjs: 1.2.0
   react-chartjs-2: 3.0.3
   react-dom: 17.0.1
+  react-icons: 4.2.0
   react-jvectormap: 0.0.16
   react-loader-spinner: 4.0.0
   react-loadingg: 1.7.2
@@ -56,6 +57,7 @@ dependencies:
   react-chartjs: 1.2.0_950f2e65afe98ef2a35838379e8207e6
   react-chartjs-2: 3.0.3_chart.js@3.3.2+react@17.0.1
   react-dom: 17.0.1_react@17.0.1
+  react-icons: 4.2.0_react@17.0.1
   react-jvectormap: 0.0.16_react-dom@17.0.1+react@17.0.1
   react-loader-spinner: 4.0.0_react-dom@17.0.1+react@17.0.1
   react-loadingg: 1.7.2_react-dom@17.0.1+react@17.0.1
@@ -10405,6 +10407,14 @@ packages:
       prop-types: 15.7.2
       react: 17.0.1
       warning: 4.0.3
+    dev: false
+
+  /react-icons/4.2.0_react@17.0.1:
+    resolution: {integrity: sha512-rmzEDFt+AVXRzD7zDE21gcxyBizD/3NqjbX6cmViAgdqfJ2UiLer8927/QhhrXQV7dEj/1EGuOTPp7JnLYVJKQ==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      react: 17.0.1
     dev: false
 
   /react-input-autosize/3.0.0_react@17.0.1:

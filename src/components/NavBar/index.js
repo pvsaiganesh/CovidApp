@@ -1,5 +1,7 @@
 import {Component} from 'react'
 import {Link, Redirect} from 'react-router-dom'
+import {AiOutlineHome} from 'react-icons/ai'
+import {FaInfo} from 'react-icons/fa'
 import './index.css'
 
 class NavBar extends Component {
@@ -38,10 +40,10 @@ class NavBar extends Component {
             alt="logo"
           />
           <Link className="link" to="/">
-            Home
+            <AiOutlineHome className="menu-icon white" />
           </Link>
           <Link className="link" to="/about">
-            About
+            <FaInfo className="menu-icon white" />
           </Link>
         </div>
       </div>

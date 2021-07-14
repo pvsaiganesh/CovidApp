@@ -1,7 +1,7 @@
 .bg-state {
-  color: #ffffff;
   min-height: 100vh;
   background-color: #161625;
+  color: #ffffff;
   font-weight: 600;
 }
 .top-bar {
@@ -9,7 +9,7 @@
   flex-direction: row;
   justify-content: space-between;
   font-family: 'HK Grotesk';
-  padding: 20px;
+  padding: 40px;
 }
 .state-main-heading {
   text-align: center;
@@ -48,18 +48,15 @@
   padding: 30px;
 }
 .district-heading {
-  color: #94a3b8;
-  font-size: 16px;
+  font-size: 14px;
   padding-top: 15px;
 }
 .district-main-heading {
-  color: #94a3b8;
   font-size: 32px;
   padding-left: 20px;
 }
 .district-count {
-  color: #94a3b8;
-  font-size: 24px;
+  font-size: 20px;
   min-width: 110px;
 }
 .loader-bg {
@@ -70,6 +67,11 @@
   height: 100vh;
   background-color: #161625;
 }
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .district-description {
   padding-left: 20px;
   color: #94a3b8;
@@ -77,19 +79,62 @@
 }
 .chart {
   padding: 50px;
+  width: 85vw;
+  margin: 20px;
+  border-radius: 20px;
 }
 .toggles {
   padding: 20px;
 }
 .btn {
   padding: 20px;
+  margin: 10px;
   border-radius: 10px;
   background-color: #1e1e30;
   color: #64748b;
+  outline: none;
+  border: transparent;
+  min-width: 150px;
 }
 .btn:hover {
+  background-color: black;
   color: #ffffff;
+  font-weight: bold;
 }
+.chart.conf {
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 20px;
+}
+.chart.acti {
+  background-color: rgba(0, 0, 255, 0.1);
+  border-radius: 20px;
+}
+.chart.reco {
+  background-color: rgba(0, 255, 0, 0.1);
+  border-radius: 20px;
+}
+.chart.dece {
+  background-color: rgba(220, 220, 220, 0.1);
+  border-radius: 20px;
+}
+.chart.purp {
+  background-color: rgba(190, 144, 212, 0.1);
+  border-radius: 20px;
+}
+.chart.pink {
+  background-color: rgb(255, 182, 193, 0.1);
+  border-radius: 20px;
+}
+.green {
+  color: #28a745;
+}
+.blue {
+  color: #007bff;
+}
+.gray {
+  color: #6c757d;
+}
+
 @media screen and (max-width: 768px) {
   .top-bar {
     display: flex;
@@ -103,5 +148,8 @@
   .card {
     max-width: 160px;
     min-width: 150px;
+  }
+  .chart {
+    min-height: 250px;
   }
 }

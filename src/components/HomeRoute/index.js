@@ -1,4 +1,5 @@
 import {Component} from 'react'
+import {BsChevronRight, BsSearch} from 'react-icons/bs'
 import Loader from 'react-loader-spinner'
 import {Link} from 'react-router-dom'
 import NavBar from '../NavBar'
@@ -250,10 +251,10 @@ class Home extends Component {
               />
             </th>
             <th>Confirmed</th>
-            <th>Active</th>
-            <th>Recovered</th>
-            <th>Deceased</th>
-            <th>Population</th>
+            <th className="hide">Active</th>
+            <th className="hide">Recovered</th>
+            <th className="hide">Deceased</th>
+            <th className="hide">Population</th>
           </tr>
         </thead>
         <tbody>
@@ -278,14 +279,14 @@ class Home extends Component {
                   <td className="item red">
                     {data.total.confirmed.toLocaleString()}
                   </td>
-                  <td className="item blue">{active.toLocaleString()}</td>
-                  <td className="item green">
+                  <td className="item blue hide">{active.toLocaleString()}</td>
+                  <td className="item green hide">
                     {data.total.recovered.toLocaleString()}
                   </td>
-                  <td className="item gray">
+                  <td className="item gray hide">
                     {data.total.deceased.toLocaleString()}
                   </td>
-                  <td className="item">
+                  <td className="item hide">
                     {data.meta.population.toLocaleString()}
                   </td>
                 </tr>
@@ -342,7 +343,10 @@ class Home extends Component {
             >
               <li className="search-item">
                 <p className="state-name">{item.state_name}</p>
-                <p className="state-code">{item.state_code}</p>
+                <p className="state-code">
+                  {item.state_code}
+                  <BsChevronRight className="arrow-color" />
+                </p>
               </li>
             </Link>
           )
@@ -353,6 +357,7 @@ class Home extends Component {
 
   renderSearch = () => (
     <div className="search">
+      <BsSearch className="search-icon" />
       <input
         onClick={this.handleChange}
         onChange={this.getFilteredData}

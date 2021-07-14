@@ -1,6 +1,7 @@
 import {Component} from 'react'
 import {Line, Bar} from 'react-chartjs-2'
 import {format} from 'date-fns'
+import './index.css'
 
 export default class StateChart extends Component {
   state = {daily: true, totalDateCountArray: []}
@@ -249,8 +250,17 @@ export default class StateChart extends Component {
       'Average Vaccinated (Two Doses) per month',
     ]
     const countArray = [1, 2, 3, 4, 5, 6, 7]
+    const renderColors = [
+      'conf',
+      'acti',
+      'reco',
+      'dece',
+      'purp',
+      'pink',
+      'pink',
+    ]
     return (
-      <div>
+      <div className="flex-container">
         <h1 className="district-main-heading">Spread Trends</h1>
         <div className="toggles">
           <button className="btn" type="button" onClick={this.getDaily}>
@@ -261,11 +271,13 @@ export default class StateChart extends Component {
           </button>
         </div>
         {daily ? (
-          <div>
-            <p className="district-description">Daily</p>
+          <div className="flex-container">
             <div>
               {totalDateCountArray.map((item, index) => (
-                <div key={countArray[index]} className="chart">
+                <div
+                  key={countArray[index]}
+                  className={`chart ${renderColors[index]}`}
+                >
                   <Bar
                     data={item}
                     options={{
@@ -286,16 +298,16 @@ export default class StateChart extends Component {
           </div>
         ) : (
           <div>
-            <p className="district-description">Cummulative</p>
             {totalDataArray.map((item, index) => (
               <div key={countArray[index]} className="chart">
                 <Line
-                  className="chart"
+                  className={`chart ${renderColors[index]}`}
                   data={item}
                   options={{
                     title: {
                       display: true,
                       text: UltimateText[index],
+                      color: '#ffffff',
                       fontSize: 20,
                     },
                     legend: {
