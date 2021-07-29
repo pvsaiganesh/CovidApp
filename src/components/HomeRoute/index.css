@@ -215,9 +215,6 @@ td {
   font-size: 24px;
   padding: 20px;
 }
-.table-scroll {
-  overflow: scroll;
-}
 @media screen and (max-width: 480px) {
   .search-icon {
     display: none;
