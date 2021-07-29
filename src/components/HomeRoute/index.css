@@ -154,11 +154,11 @@ td {
 .search-item {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 800px;
   padding: 0px 20px 0px 20px;
   align-items: center;
-  border: 1px solid #94a3b8;
+  border: 1px solid #64748b;
   color: #64748b;
   background-color: #161625;
   margin: 10px;
@@ -174,7 +174,7 @@ td {
   text-decoration: none;
 }
 .states-link:hover {
-  background-color: black;
+  background-color: #64748b;
   border-radius: 20px;
 }
 .red {
