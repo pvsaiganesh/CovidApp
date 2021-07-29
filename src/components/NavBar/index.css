@@ -6,6 +6,9 @@
   background-color: #1e1e30;
   padding: 20px;
 }
+.bg-3 {
+  background-color: #1e1e30;
+}
 .link {
   text-decoration: none;
   color: #ffffff;
@@ -19,21 +22,25 @@
   font-weight: bold;
 }
 .logo {
-  width: 150px;
+  width: 120px;
   height: 40px;
 }
 @media screen and (max-width: 768px) {
   .mobile-links {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+  }
+  .logo {
+    width: 90px;
+    height: 40px;
   }
 
   .menu-icon {
     margin: 5px;
     height: 40px;
-    width: 60px;
+    width: 50px;
     color: white;
   }
   .navbar {

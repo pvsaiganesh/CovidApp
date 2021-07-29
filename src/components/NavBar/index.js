@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Link, Redirect} from 'react-router-dom'
+import {Link, Redirect, withRouter} from 'react-router-dom'
 import {AiOutlineHome} from 'react-icons/ai'
 import {FaInfo} from 'react-icons/fa'
 import './index.css'
@@ -14,7 +14,7 @@ class NavBar extends Component {
   render() {
     const {clicked} = this.state
     return (
-      <div>
+      <div className="bg-3">
         <div className="navbar">
           <img
             onClick={this.goToHome}
@@ -50,4 +50,4 @@ class NavBar extends Component {
     )
   }
 }
-export default NavBar
+export default withRouter(NavBar)

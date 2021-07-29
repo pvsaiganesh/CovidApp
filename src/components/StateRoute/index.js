@@ -283,7 +283,6 @@ class State extends Component {
     } else if (value === 'deceased') {
       allCSS = 'gray'
     }
-
     const keys = Object.keys(data)
     if (data === undefined || keys.length === 0) {
       return ''

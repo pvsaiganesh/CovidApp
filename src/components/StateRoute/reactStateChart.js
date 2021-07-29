@@ -36,6 +36,7 @@ export default class StateChart extends Component {
       rawDatesSet.push(format(new Date(item), 'd MMM').toString()),
     )
     const datesLabels = rawDatesSet.reverse().splice(0, 10)
+    const latestYear = format(new Date(), 'y')
     const dateCountConfirmedArray = []
     const dateCountRecoveredArray = []
     const dateCountDeceasedArray = []
@@ -43,7 +44,7 @@ export default class StateChart extends Component {
     datesLabels.reverse().forEach(label => {
       keys.forEach(item => {
         if (format(new Date(item), 'd MMM').toString() === label) {
-          if (format(new Date(item), 'y').toString() === '2021') {
+          if (format(new Date(item), 'y').toString() === latestYear) {
             dateCountConfirmedArray.push(data[item].delta.confirmed)
             if (
               Number.isNaN(data[item].delta.deceased) ||
@@ -274,7 +275,7 @@ export default class StateChart extends Component {
           <div className="flex-container">
             <div>
               {totalDateCountArray.map((item, index) => (
-                <div
+                <article
                   key={countArray[index]}
                   className={`chart ${renderColors[index]}`}
                 >
@@ -290,18 +291,21 @@ export default class StateChart extends Component {
                         display: true,
                         position: 'right',
                       },
+                      maintainAspectRatio: false,
                     }}
                   />
-                </div>
+                </article>
               ))}
             </div>
           </div>
         ) : (
           <div>
             {totalDataArray.map((item, index) => (
-              <div key={countArray[index]} className="chart">
+              <article
+                key={countArray[index]}
+                className={`chart ${renderColors[index]}`}
+              >
                 <Line
-                  className={`chart ${renderColors[index]}`}
                   data={item}
                   options={{
                     title: {
@@ -314,9 +318,10 @@ export default class StateChart extends Component {
                       display: true,
                       position: 'right',
                     },
+                    maintainAspectRatio: false,
                   }}
                 />
-              </div>
+              </article>
             ))}
           </div>
         )}

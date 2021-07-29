@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  min-width: 696px;
+  min-width: 400px;
   list-style: none;
   padding-top: 20px;
 }
@@ -130,7 +130,7 @@ td {
   min-height: 100vh;
 }
 .search-box {
-  width: 824px;
+  width: 800px;
   height: 72px;
   border-radius: 10px;
   background-color: #2f2f43;
@@ -154,17 +154,14 @@ td {
 .search-item {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  min-width: 824px;
-  max-width: 824px;
+  justify-content: space-around;
+  width: 800px;
   padding: 0px 20px 0px 20px;
   align-items: center;
   border: 1px solid #94a3b8;
-  border-bottom: none;
-  border-left: none;
-  border-right: none;
   color: #64748b;
   background-color: #161625;
+  margin: 10px;
   border-radius: 20px;
 }
 .sort {
@@ -202,11 +199,11 @@ td {
 .search-list {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  max-width: 824px;
-  margin-right: 308px;
-  margin-left: 328px;
+}
+.table-scroll {
+  overflow: auto;
 }
 .state-name {
   color: white;
@@ -218,7 +215,14 @@ td {
   font-size: 24px;
   padding: 20px;
 }
-@media screen and (max-width: 768px) {
+.table-scroll {
+  overflow: scroll;
+}
+@media screen and (max-width: 480px) {
+  .search-icon {
+    display: none;
+  }
+
   .item {
     min-width: 200px;
     max-width: 400px;
@@ -240,12 +244,12 @@ td {
     flex-wrap: wrap;
     border-radius: none;
   }
-  .hide {
-    display: none;
+  .table-scroll {
+    overflow: scroll;
   }
   .search-list {
     flex-wrap: wrap;
-    max-width: 350px;
+    max-width: 360px;
     margin-right: 0px;
     margin-left: 0px;
     padding-left: 0px;
@@ -276,15 +280,12 @@ td {
     justify-content: flex-start;
     align-items: center;
     padding: 20px;
-    min-width: 400px;
-    max-width: 400px;
+    width: 350px;
     flex-wrap: wrap;
   }
   .table {
     margin: 0px;
     padding: 0px;
-    min-width: 0px;
-    max-width: 400px;
   }
   .state-name {
     min-width: 100px;

@@ -79,6 +79,7 @@
 }
 .chart {
   padding: 50px;
+  height: 90vh;
   width: 85vw;
   margin: 20px;
   border-radius: 20px;
@@ -135,7 +136,7 @@
   color: #6c757d;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 480px) {
   .top-bar {
     display: flex;
     flex-direction: row;
@@ -150,6 +151,7 @@
     min-width: 150px;
   }
   .chart {
-    min-height: 250px;
+    height: 60vh;
+    width: 85vw;
   }
 }

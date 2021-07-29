@@ -169,7 +169,6 @@ class Home extends Component {
       'https://api.covid19india.org/v4/min/data.min.json',
     )
     const data = await response.json()
-    console.log(data)
     this.setState({statesStats: data, loader: false})
   }
 
@@ -232,70 +231,74 @@ class Home extends Component {
     const {statesStats, statesNames} = this.state
     let count = 0
     return (
-      <table className="states-list">
-        <thead className="white">
-          <tr>
-            <th>
-              State,UT
-              <img
-                onClick={this.makeNormal}
-                className="sort"
-                src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1624207432/sort_txpoob.png"
-                alt="sort"
-              />
-              <img
-                onClick={this.makeReverse}
-                className="sort"
-                src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1624207377/sort_ztkfw2.png"
-                alt="sort"
-              />
-            </th>
-            <th>Confirmed</th>
-            <th className="hide">Active</th>
-            <th className="hide">Recovered</th>
-            <th className="hide">Deceased</th>
-            <th className="hide">Population</th>
-          </tr>
-        </thead>
-        <tbody>
-          {statesNames.map(obj => {
-            const stateCode = obj.state_code
-            const stateName = obj.state_name
-            const data = statesStats[stateCode]
-            const id = `item${count}`
-            count += 1
+      <div className="table-scroll">
+        <table className="states-list">
+          <thead className="white">
+            <tr>
+              <th>
+                State,UT
+                <img
+                  onClick={this.makeNormal}
+                  className="sort"
+                  src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1624207432/sort_txpoob.png"
+                  alt="sort"
+                />
+                <img
+                  onClick={this.makeReverse}
+                  className="sort"
+                  src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1624207377/sort_ztkfw2.png"
+                  alt="sort"
+                />
+              </th>
+              <th>Confirmed</th>
+              <th className="hide">Active</th>
+              <th className="hide">Recovered</th>
+              <th className="hide">Deceased</th>
+              <th className="hide">Population</th>
+            </tr>
+          </thead>
+          <tbody>
+            {statesNames.map(obj => {
+              const stateCode = obj.state_code
+              const stateName = obj.state_name
+              const data = statesStats[stateCode]
+              const id = `item${count}`
+              count += 1
 
-            let ans
-            if (data === undefined) {
-              ans = <tr />
-            } else {
-              const active =
-                data.total.confirmed -
-                data.total.recovered -
-                data.total.deceased
-              ans = (
-                <tr key={id}>
-                  <td className="item left">{stateName}</td>
-                  <td className="item red">
-                    {data.total.confirmed.toLocaleString()}
-                  </td>
-                  <td className="item blue hide">{active.toLocaleString()}</td>
-                  <td className="item green hide">
-                    {data.total.recovered.toLocaleString()}
-                  </td>
-                  <td className="item gray hide">
-                    {data.total.deceased.toLocaleString()}
-                  </td>
-                  <td className="item hide">
-                    {data.meta.population.toLocaleString()}
-                  </td>
-                </tr>
-              )
-            }
-            return ans
-          })}
-        </tbody>
-      </table>
+              let ans
+              if (data === undefined) {
+                ans = <tr />
+              } else {
+                const active =
+                  data.total.confirmed -
+                  data.total.recovered -
+                  data.total.deceased
+                ans = (
+                  <tr key={id}>
+                    <td className="item left">{stateName}</td>
+                    <td className="item red">
+                      {data.total.confirmed.toLocaleString()}
+                    </td>
+                    <td className="item blue hide">
+                      {active.toLocaleString()}
+                    </td>
+                    <td className="item green hide">
+                      {data.total.recovered.toLocaleString()}
+                    </td>
+                    <td className="item gray hide">
+                      {data.total.deceased.toLocaleString()}
+                    </td>
+                    <td className="item hide">
+                      {data.meta.population.toLocaleString()}
+                    </td>
+                  </tr>
+                )
+              }
+              return ans
+            })}
+          </tbody>
+        </table>
+      </div>
     )
   }
 
