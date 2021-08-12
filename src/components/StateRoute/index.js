@@ -273,7 +273,7 @@ class State extends Component {
 
   renderTopDistricts = () => {
     const {data, value} = this.state
-    let allCSS
+    let allCSS = 'red'
     if (value === 'confirmed') {
       allCSS = 'red'
     } else if (value === 'active') {
@@ -284,7 +284,7 @@ class State extends Component {
       allCSS = 'gray'
     }
     const keys = Object.keys(data)
-    if (data === undefined || keys.length === 0) {
+    if (data.length === {} || keys.length === 0 || data === undefined) {
       return ''
     }
     const districtKeys = Object.keys(data.districts)
