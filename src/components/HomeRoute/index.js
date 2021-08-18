@@ -166,9 +166,10 @@ class Home extends Component {
 
   getData = async () => {
     const response = await fetch(
-      'https://api.covid19india.org/v4/min/data.min.json',
+      'https://data.covid19india.org/v4/min/data.min.json',
     )
     const data = await response.json()
+    console.log(data)
     this.setState({statesStats: data, loader: false})
   }
 

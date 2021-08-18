@@ -164,12 +164,12 @@ class State extends Component {
     const {params} = match
     const {code} = params
     const response = await fetch(
-      'https://api.covid19india.org/v4/min/data.min.json',
+      'https://data.covid19india.org/v4/min/data.min.json',
     )
     const totalData = await response.json()
     const data = totalData[code]
     const response1 = await fetch(
-      `https://api.covid19india.org/v4/min/timeseries-${code}.min.json`,
+      `https://data.covid19india.org/v4/min/timeseries-${code}.min.json`,
     )
     const data1 = await response1.json()
     this.setState({
