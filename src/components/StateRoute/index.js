@@ -162,21 +162,21 @@ class State extends Component {
   getData = async () => {
     const {match} = this.props
     const {params} = match
-    const {code} = params
+    const {stateCode} = params
     const response = await fetch(
       'https://data.covid19india.org/v4/min/data.min.json',
     )
     const totalData = await response.json()
-    const data = totalData[code]
+    const data = totalData[stateCode]
     const response1 = await fetch(
-      `https://data.covid19india.org/v4/min/timeseries-${code}.min.json`,
+      `https://data.covid19india.org/v4/min/timeseries-${stateCode}.min.json`,
     )
     const data1 = await response1.json()
     this.setState({
       stats: data.total,
       data,
-      timelineData: data1[code].dates,
-      stateCode: code,
+      timelineData: data1[stateCode].dates,
+      stateCode,
       loader: false,
     })
   }
