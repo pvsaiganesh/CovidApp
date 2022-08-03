@@ -12,6 +12,7 @@ export default class StateChart extends Component {
 
   renderData = () => {
     const {data} = this.props
+    console.log(data)
     const keys = Object.keys(data)
     const rawLabelsSet = []
     const confirmedArray = []
@@ -28,55 +29,60 @@ export default class StateChart extends Component {
     const vaccinatedOneArray = []
     let vaccinatedTwoCount = 0
     const vaccinatedTwoArray = []
-    keys.forEach(item =>
-      rawLabelsSet.push(format(new Date(item), 'MMM Y').toString()),
-    )
+    console.log(keys)
+    function dateComparison(a, b) {
+      const date1 = new Date(a)
+      const date2 = new Date(b)
+
+      return date2 - date1
+    }
+
+    keys
+      .sort(dateComparison)
+      .forEach(item =>
+        rawLabelsSet.push(format(new Date(item), 'MMM Y').toString()),
+      )
     const rawDatesSet = []
-    keys.forEach(item =>
-      rawDatesSet.push(format(new Date(item), 'd MMM').toString()),
-    )
-    const datesLabels = rawDatesSet.reverse().splice(0, 10)
-    const latestYear = format(new Date(), 'y')
+    keys
+      .sort(dateComparison)
+      .forEach(item =>
+        rawDatesSet.push(format(new Date(item), 'd MMM').toString()),
+      )
+    const datesLabels = rawDatesSet.splice(0, 10)
     const dateCountConfirmedArray = []
     const dateCountRecoveredArray = []
     const dateCountDeceasedArray = []
     const dateCountActiveArray = []
-    datesLabels.reverse().forEach(label => {
-      keys.forEach(item => {
-        if (format(new Date(item), 'd MMM').toString() === label) {
-          if (format(new Date(item), 'y').toString() === latestYear) {
-            dateCountConfirmedArray.push(data[item].delta.confirmed)
-            if (
-              Number.isNaN(data[item].delta.deceased) ||
-              data[item].delta.deceased === undefined
-            ) {
-              dateCountDeceasedArray.push(0)
-            } else {
-              dateCountDeceasedArray.push(data[item].delta.deceased)
-            }
-            if (
-              Number.isNaN(data[item].delta.recovered) ||
-              data[item].delta.recovered === undefined
-            ) {
-              dateCountRecoveredArray.push(0)
-            } else {
-              dateCountRecoveredArray.push(data[item].delta.recovered)
-            }
-            if (
-              Number.isNaN(data[item].delta.tested) ||
-              data[item].delta.tested === undefined
-            ) {
-              dateCountActiveArray.push(0)
-            } else {
-              dateCountActiveArray.push(data[item].delta.tested)
-            }
-          }
-        }
-      })
+    keys.forEach(item => {
+      dateCountConfirmedArray.push(data[item]?.delta?.confirmed)
+      if (
+        Number.isNaN(data[item]?.delta?.deceased) ||
+        data[item]?.delta?.deceased === undefined
+      ) {
+        dateCountDeceasedArray.push(0)
+      } else {
+        dateCountDeceasedArray.push(data[item].delta.deceased)
+      }
+      if (
+        Number.isNaN(data[item]?.delta?.recovered) ||
+        data[item]?.delta?.recovered === undefined
+      ) {
+        dateCountRecoveredArray.push(0)
+      } else {
+        dateCountRecoveredArray.push(data[item].delta.recovered)
+      }
+      if (
+        Number.isNaN(data[item]?.delta?.tested) ||
+        data[item]?.delta?.tested === undefined
+      ) {
+        dateCountActiveArray.push(0)
+      } else {
+        dateCountActiveArray.push(data[item]?.delta?.tested)
+      }
     })
     const labels = [...new Set(rawLabelsSet)]
-    labels.forEach(label => {
-      keys.forEach(item => {
+    labels.sort(dateComparison).forEach(label => {
+      keys.sort(dateComparison).forEach(item => {
         if (format(new Date(item), 'MMM Y').toString() === label) {
           if (
             Number.isNaN(data[item].total.deceased) ||
@@ -241,6 +247,7 @@ export default class StateChart extends Component {
 
   render() {
     const {daily, totalDataArray, totalDateCountArray} = this.state
+    console.log(totalDateCountArray)
     const UltimateText = [
       'Average Confirmed per month',
       'Average Active per month',

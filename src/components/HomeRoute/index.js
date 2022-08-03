@@ -1,180 +1,192 @@
-import {Component} from 'react'
-import {BsChevronRight, BsSearch} from 'react-icons/bs'
+import {useState, useEffect} from 'react'
+import {BsSearch} from 'react-icons/bs'
+import {BiChevronRightSquare} from 'react-icons/bi'
+import {FcGenericSortingAsc, FcGenericSortingDesc} from 'react-icons/fc'
 import Loader from 'react-loader-spinner'
 import {Link} from 'react-router-dom'
 import NavBar from '../NavBar'
 import Footer from '../Footer'
 import './index.css'
 
-class Home extends Component {
-  state = {
-    statesStats: [],
-    data: [],
-    loader: true,
-    reverse: false,
-    statesNames: [
-      {
-        state_code: 'AN',
-        state_name: 'Andaman and Nicobar Islands',
-      },
-      {
-        state_code: 'AP',
-        state_name: 'Andhra Pradesh',
-      },
-      {
-        state_code: 'AR',
-        state_name: 'Arunachal Pradesh',
-      },
-      {
-        state_code: 'AS',
-        state_name: 'Assam',
-      },
-      {
-        state_code: 'BR',
-        state_name: 'Bihar',
-      },
-      {
-        state_code: 'CH',
-        state_name: 'Chandigarh',
-      },
-      {
-        state_code: 'CT',
-        state_name: 'Chhattisgarh',
-      },
-      {
-        state_code: 'DN',
-        state_name: 'Dadra and Nagar Haveli and Daman and Diu',
-      },
-      {
-        state_code: 'DL',
-        state_name: 'Delhi',
-      },
-      {
-        state_code: 'GA',
-        state_name: 'Goa',
-      },
-      {
-        state_code: 'GJ',
-        state_name: 'Gujarat',
-      },
-      {
-        state_code: 'HR',
-        state_name: 'Haryana',
-      },
-      {
-        state_code: 'HP',
-        state_name: 'Himachal Pradesh',
-      },
-      {
-        state_code: 'JK',
-        state_name: 'Jammu and Kashmir',
-      },
-      {
-        state_code: 'JH',
-        state_name: 'Jharkhand',
-      },
-      {
-        state_code: 'KA',
-        state_name: 'Karnataka',
-      },
-      {
-        state_code: 'KL',
-        state_name: 'Kerala',
-      },
-      {
-        state_code: 'LA',
-        state_name: 'Ladakh',
-      },
-      {
-        state_code: 'LD',
-        state_name: 'Lakshadweep',
-      },
-      {
-        state_code: 'MH',
-        state_name: 'Maharashtra',
-      },
-      {
-        state_code: 'MP',
-        state_name: 'Madhya Pradesh',
-      },
-      {
-        state_code: 'MN',
-        state_name: 'Manipur',
-      },
-      {
-        state_code: 'ML',
-        state_name: 'Meghalaya',
-      },
-      {
-        state_code: 'MZ',
-        state_name: 'Mizoram',
-      },
-      {
-        state_code: 'NL',
-        state_name: 'Nagaland',
-      },
-      {
-        state_code: 'OR',
-        state_name: 'Odisha',
-      },
-      {
-        state_code: 'PY',
-        state_name: 'Puducherry',
-      },
-      {
-        state_code: 'PB',
-        state_name: 'Punjab',
-      },
-      {
-        state_code: 'RJ',
-        state_name: 'Rajasthan',
-      },
-      {
-        state_code: 'SK',
-        state_name: 'Sikkim',
-      },
-      {
-        state_code: 'TN',
-        state_name: 'Tamil Nadu',
-      },
-      {
-        state_code: 'TG',
-        state_name: 'Telangana',
-      },
-      {
-        state_code: 'TR',
-        state_name: 'Tripura',
-      },
-      {
-        state_code: 'UP',
-        state_name: 'Uttar Pradesh',
-      },
-      {
-        state_code: 'UT',
-        state_name: 'Uttarakhand',
-      },
-      {
-        state_code: 'WB',
-        state_name: 'West Bengal',
-      },
-    ],
-  }
+const names = [
+  {
+    state_code: 'AN',
+    state_name: 'Andaman and Nicobar Islands',
+  },
+  {
+    state_code: 'AP',
+    state_name: 'Andhra Pradesh',
+  },
+  {
+    state_code: 'AR',
+    state_name: 'Arunachal Pradesh',
+  },
+  {
+    state_code: 'AS',
+    state_name: 'Assam',
+  },
+  {
+    state_code: 'BR',
+    state_name: 'Bihar',
+  },
+  {
+    state_code: 'CH',
+    state_name: 'Chandigarh',
+  },
+  {
+    state_code: 'CT',
+    state_name: 'Chhattisgarh',
+  },
+  {
+    state_code: 'DN',
+    state_name: 'Dadra and Nagar Haveli and Daman and Diu',
+  },
+  {
+    state_code: 'DL',
+    state_name: 'Delhi',
+  },
+  {
+    state_code: 'GA',
+    state_name: 'Goa',
+  },
+  {
+    state_code: 'GJ',
+    state_name: 'Gujarat',
+  },
+  {
+    state_code: 'HR',
+    state_name: 'Haryana',
+  },
+  {
+    state_code: 'HP',
+    state_name: 'Himachal Pradesh',
+  },
+  {
+    state_code: 'JK',
+    state_name: 'Jammu and Kashmir',
+  },
+  {
+    state_code: 'JH',
+    state_name: 'Jharkhand',
+  },
+  {
+    state_code: 'KA',
+    state_name: 'Karnataka',
+  },
+  {
+    state_code: 'KL',
+    state_name: 'Kerala',
+  },
+  {
+    state_code: 'LA',
+    state_name: 'Ladakh',
+  },
+  {
+    state_code: 'LD',
+    state_name: 'Lakshadweep',
+  },
+  {
+    state_code: 'MH',
+    state_name: 'Maharashtra',
+  },
+  {
+    state_code: 'MP',
+    state_name: 'Madhya Pradesh',
+  },
+  {
+    state_code: 'MN',
+    state_name: 'Manipur',
+  },
+  {
+    state_code: 'ML',
+    state_name: 'Meghalaya',
+  },
+  {
+    state_code: 'MZ',
+    state_name: 'Mizoram',
+  },
+  {
+    state_code: 'NL',
+    state_name: 'Nagaland',
+  },
+  {
+    state_code: 'OR',
+    state_name: 'Odisha',
+  },
+  {
+    state_code: 'PY',
+    state_name: 'Puducherry',
+  },
+  {
+    state_code: 'PB',
+    state_name: 'Punjab',
+  },
+  {
+    state_code: 'RJ',
+    state_name: 'Rajasthan',
+  },
+  {
+    state_code: 'SK',
+    state_name: 'Sikkim',
+  },
+  {
+    state_code: 'TN',
+    state_name: 'Tamil Nadu',
+  },
+  {
+    state_code: 'TG',
+    state_name: 'Telangana',
+  },
+  {
+    state_code: 'TR',
+    state_name: 'Tripura',
+  },
+  {
+    state_code: 'UP',
+    state_name: 'Uttar Pradesh',
+  },
+  {
+    state_code: 'UT',
+    state_name: 'Uttarakhand',
+  },
+  {
+    state_code: 'WB',
+    state_name: 'West Bengal',
+  },
+]
 
-  componentDidMount() {
-    this.getData()
+const Home = () => {
+  const apiConsts = {
+    initial: 'INITIAL',
+    inProgress: 'INPROGRESS',
+    failure: 'FAILURE',
+    success: 'SUCCESS',
   }
+  const [statesStats, setStatesStats] = useState([])
+  const [globalData, setGlobalData] = useState([])
+  const [loader, setLoader] = useState(true)
+  const [reverse, setReverse] = useState(false)
+  const [stateNames, setStateNames] = useState(names)
+  const [apiStatus, setApiStatus] = useState(apiConsts.initial)
 
-  getData = async () => {
+  const getData = async () => {
     const response = await fetch(
       'https://data.covid19india.org/v4/min/data.min.json',
     )
-    const data = await response.json()
-    console.log(data)
-    this.setState({statesStats: data, loader: false})
+    const res = await response.json()
+    if (response.ok) {
+      setStatesStats(res)
+      setApiStatus(apiConsts.success)
+    } else {
+      setApiStatus(apiConsts.failure)
+    }
   }
 
-  renderIndiaStats = () => {
-    const {statesStats} = this.state
+  useEffect(() => {
+    setApiStatus(apiConsts.inProgress)
+    getData()
+  }, [])
+  const renderIndiaStats = () => {
     let confirmed = 0
     let deceased = 0
     let recovered = 0
@@ -183,44 +195,43 @@ class Home extends Component {
       deceased += statesStats[item].total.deceased
       recovered += statesStats[item].total.recovered
     }
-    const data = Object.keys(statesStats)
-    data.forEach(countFunction)
-    const active = confirmed - recovered - deceased
+    Object.keys(statesStats).forEach(countFunction)
+    const active = recovered + deceased
     return (
       <ul className="card-container">
-        <li className="card conf">
+        <li testid="countryWideConfirmedCases" className="card conf">
           <p className="confirmed-class">Confirmed</p>
           <img
             className="stats-logo"
             src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1623915745/check-mark_1_tshh2r.png"
-            alt="logo"
+            alt="country wide confirmed cases pic"
           />
           <p className="confirmed-stats">{confirmed.toLocaleString()}</p>
         </li>
-        <li className="card acti">
+        <li testid="countryWideActiveCases" className="card acti">
           <p className="active-class">Active</p>
           <img
             className="stats-logo"
             src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1623915751/protection_1_vrxrqn.png"
-            alt="logo"
+            alt="country wide active cases pic"
           />
           <p className="active-stats">{active.toLocaleString()}</p>
         </li>
-        <li className="card reco">
+        <li testid="countryWideRecoveredCases" className="card reco">
           <p className="recovered-class">Recovered</p>
           <img
             className="stats-logo"
             src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1623915741/recovered_1_hespgt.png"
-            alt="logo"
+            alt="country wide recovered cases pic"
           />
           <p className="recovered-stats">{recovered.toLocaleString()}</p>
         </li>
-        <li className="card dece">
+        <li testid="countryWideDeceasedCases" className="card dece">
           <p className="deceased-class">Deceased</p>
           <img
             className="stats-logo"
             src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1623915737/breathing_1_ddam3m.png"
-            alt="logo"
+            alt="country wide deceased cases pic"
           />
           <p className="deceased-stats">{deceased.toLocaleString()}</p>
         </li>
@@ -228,28 +239,51 @@ class Home extends Component {
     )
   }
 
-  renderData = () => {
-    const {statesStats, statesNames} = this.state
+  const makeReverse = () => {
+    if (reverse === false) {
+      const ans = stateNames.reverse()
+      setStateNames(ans)
+      setReverse(true)
+    }
+  }
+
+  const makeNormal = () => {
+    if (reverse === true) {
+      const ans = stateNames.reverse()
+      setStateNames(ans)
+      setReverse(false)
+    }
+  }
+
+  const renderData = () => {
     let count = 0
     return (
       <div className="table-scroll">
-        <table className="states-list">
+        <table testid="stateWiseCovidDataTable" className="states-list">
           <thead className="white">
             <tr>
               <th>
                 State,UT
-                <img
-                  onClick={this.makeNormal}
+                <button
+                  type="button"
+                  onClick={() => {
+                    makeNormal()
+                  }}
                   className="sort"
-                  src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1624207432/sort_txpoob.png"
                   alt="sort"
-                />
-                <img
-                  onClick={this.makeReverse}
+                >
+                  <FcGenericSortingAsc />
+                </button>
+                <button
+                  onClick={() => {
+                    makeReverse()
+                  }}
                   className="sort"
-                  src="https://res.cloudinary.com/pvsaiganesh/image/upload/v1624207377/sort_ztkfw2.png"
+                  type="button"
                   alt="sort"
-                />
+                >
+                  <FcGenericSortingDesc />
+                </button>
               </th>
               <th>Confirmed</th>
               <th className="hide">Active</th>
@@ -259,7 +293,7 @@ class Home extends Component {
             </tr>
           </thead>
           <tbody>
-            {statesNames.map(obj => {
+            {stateNames.map(obj => {
               const stateCode = obj.state_code
               const stateName = obj.state_name
               const data = statesStats[stateCode]
@@ -303,41 +337,23 @@ class Home extends Component {
     )
   }
 
-  makeReverse = () => {
-    const {statesNames, reverse} = this.state
-    if (reverse === false) {
-      const ans = statesNames.reverse()
-      this.setState({statesNames: ans, reverse: true})
-    }
-  }
-
-  makeNormal = () => {
-    const {statesNames, reverse} = this.state
-    if (reverse === true) {
-      const ans = statesNames.reverse()
-      this.setState({statesNames: ans, reverse: false})
-    }
-  }
-
-  getFilteredData = event => {
-    const {statesNames} = this.state
+  const getFilteredData = event => {
     const searchValue = event.target.value
-    const filteredData = statesNames.filter(item => {
+    const filteredData = stateNames.filter(item => {
       let ans
       if (item.state_name.toLowerCase().includes(searchValue.toLowerCase())) {
         ans = item
       }
       return ans
     })
-    this.setState({data: filteredData})
+    setGlobalData(filteredData)
   }
 
-  renderSearchList = () => {
-    const {data} = this.state
+  const renderSearchList = () => {
     let count = 0
     return (
-      <ul className="search-list">
-        {data.map(item => {
+      <ul testid="searchResultsUnorderedList" className="search-list">
+        {globalData.map(item => {
           count += 1
           return (
             <Link
@@ -349,7 +365,7 @@ class Home extends Component {
                 <p className="state-name">{item.state_name}</p>
                 <p className="state-code">
                   {item.state_code}
-                  <BsChevronRight className="arrow-color" />
+                  <BiChevronRightSquare className="arrow-color" />
                 </p>
               </li>
             </Link>
@@ -359,12 +375,16 @@ class Home extends Component {
     )
   }
 
-  renderSearch = () => (
+  const renderSearch = () => (
     <div className="search">
       <BsSearch className="search-icon" />
       <input
-        onClick={this.handleChange}
-        onChange={this.getFilteredData}
+        // onClick={() => {
+        //   handleChange()
+        // }}
+        onChange={e => {
+          getFilteredData(e)
+        }}
         className="search-box"
         placeholder="Enter the State"
         type="search"
@@ -372,33 +392,44 @@ class Home extends Component {
     </div>
   )
 
-  render() {
-    const {loader} = this.state
-    return (
-      <div>
-        {loader ? (
-          <div>
-            <NavBar />
-            <div className="loader-bg">
-              <Loader type="TailSpin" color="#007BFF" height={50} width={50} />
-            </div>
+  const renderView = () => {
+    switch (apiStatus) {
+      case apiConsts.inProgress:
+        return (
+          <div testid="homeRouteLoader" className="loader-bg">
+            <Loader
+              testid="homeRouteLoader"
+              type="TailSpin"
+              color="#007BFF"
+              height={50}
+              width={50}
+            />
           </div>
-        ) : (
+        )
+      case apiConsts.success:
+        return (
           <div className="bg">
-            <NavBar />
-            {this.renderSearch()}
-            <div>{this.renderSearchList()}</div>
+            {renderSearch()}
+            <div>{renderSearchList()}</div>
             <div>
               <div>
-                {this.renderIndiaStats()}
-                <div className="to-center">{this.renderData()}</div>
+                {renderIndiaStats()}
+                <div className="to-center">{renderData()}</div>
               </div>
             </div>
-            <Footer />
           </div>
-        )}
-      </div>
-    )
+        )
+      default:
+        return null
+    }
   }
+
+  return (
+    <div>
+      <NavBar />
+      {renderView()}
+      <Footer />
+    </div>
+  )
 }
 export default Home
